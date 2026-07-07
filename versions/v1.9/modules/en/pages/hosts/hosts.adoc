@@ -753,7 +753,7 @@ The script in the `contents:` block performs the following actions:
 * Retrieves the fully qualified domain name (FQDN) and extracts the short hostname
 * Retrieves the node's IP address
 * Replaces the default `+127.0.0.1 localhost {hostname}+` entry with `127.0.0.1 localhost`
-* Adds a new entry in the following format: `{node IP} {FQDN} {short hostname}+`
+* Adds a new entry in the following format: `+{node IP} {FQDN} {short hostname}+`
 
 The template uses the `network.after` stage, which applies changes after the network initializes. A reboot is normally required to ensure these changes are safely applied to all active system processes. However, if immediate node downtime is not possible, or if you can tolerate a brief delay, you can choose an alternative deployment method.
 
