@@ -142,7 +142,7 @@ Related issue: https://github.com/harvester/harvester/issues/10349[#10349]
 
 === Upgrade stalls during image preloading due to system-upgrade-controller failure
 
-During the image preloading phase of the upgrade, Harvester creates a `system-upgrade-controller` (SUC) plan for each node to download the container images required for the new release. If the SUC fails to reschedule a plan job after a transient failure, the affected node's plan remains stuck in the `Applying` state, stalling the upgrade indefinitely.
+During the image preloading phase of the upgrade, {harvester-product-name} creates a `system-upgrade-controller` (SUC) plan for each node to download the container images required for the new release. If the SUC fails to reschedule a plan job after a transient failure, the affected node's plan remains stuck in the `Applying` state, stalling the upgrade indefinitely.
 
 This is an intermittent issue. Once a plan job fails and is subsequently deleted (according to the default time-to-live value of 900 seconds), the SUC may stop rescheduling the job for the affected node.
 
