@@ -369,7 +369,7 @@ Depending on your setup, choose one of the following approaches:
 
 * *Keep the legacy path*: In the Rancher UI, set `.spec.rkeConfig.chartValues.harvester-cloud-provider.cloudConfigPath` to `/etc/kubernetes/cloud-config`.
 ====
-
+--
 ======
 
 == Upgrade Cloud Provider
