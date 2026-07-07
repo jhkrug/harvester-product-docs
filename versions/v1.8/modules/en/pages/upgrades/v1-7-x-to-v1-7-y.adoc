@@ -1,5 +1,5 @@
 = Upgrade from v1.7.x to v1.7.y
-:revdate: 2026-06-04
+:revdate: 2026-07-07
 :page-revdate: {revdate}
 
 == General information
@@ -138,3 +138,65 @@ Expected output:
 ----
 
 Related issue: https://github.com/harvester/harvester/issues/10349[#10349]
+
+=== Upgrade stalls during image preloading due to system-upgrade-controller failure
+
+During the image preloading phase of the upgrade, {harvester-product-name} creates a `system-upgrade-controller` (SUC) plan for each node to download the container images required for the new release. If the SUC fails to reschedule a plan job after a transient failure, the affected node's plan remains stuck in the `Applying` state, stalling the upgrade indefinitely.
+
+This is an intermittent issue. Once a plan job fails and is subsequently deleted (according to the default time-to-live value of 900 seconds), the SUC may stop rescheduling the job for the affected node.
+
+[NOTE]
+====
+While this issue most commonly manifests during the image preloading phase, the same SUC behavior can potentially affect any other upgrade phase that relies on SUC plans.
+====
+
+==== Symptoms
+
+* The upgrade has shown no progress for an extended period (typically more than 30 minutes) while in the image preloading phase.
+
+* No job has been created for the affected node's prepare plan in the `cattle-system` namespace.
++
+[,bash]
+----
+kubectl get jobs -n cattle-system | grep prepare
+----
+
+* One or more SUC prepare plans are stuck in the `Applying` state.
++
+[,bash]
+----
+kubectl get plans.upgrade.cattle.io -n cattle-system | grep prepare
+----
++
+You can run the following command to check the status of the stuck plan. Replace `<plan-name>` with the actual resource name returned from the previous command.
++
+[,bash]
+----
+kubectl get plans.upgrade.cattle.io <plan-name> -n cattle-system -o yaml | yq .status
+----
++
+The affected node's name is listed under `applying` and the status of the `Complete` condition is `False`.
++
+[,yaml]
+----
+  applying:
+  - <node-name>
+  conditions:
+  - lastUpdateTime: "..."
+    reason: SyncJob
+    status: "False"
+    type: Complete
+----
+
+==== Workaround
+
+Restart the `system-upgrade-controller` deployment to force the SUC to reconcile all plans and reschedule any stuck jobs.
+
+[,bash]
+----
+kubectl rollout restart deployment/system-upgrade-controller -n cattle-system
+----
+
+After the restart, SUC reschedules the plan job for the affected node. The upgrade automatically resumes within a few minutes.
+
+Related issue: https://github.com/harvester/harvester/issues/9880[#9880]
