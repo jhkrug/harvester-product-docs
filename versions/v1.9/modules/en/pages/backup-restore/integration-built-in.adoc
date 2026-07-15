@@ -1,6 +1,8 @@
-= Virtual Machine Backup, Snapshot & Restore
+= Built-in Virtual Machine Backup, Snapshot & Restore
 :revdate: 2026-01-08
 :page-revdate: {revdate}
+
+{harvester-product-name-tm} includes native backup, snapshot, and restore functionality for virtual machines that use {longhorn-product-name-tm} volumes, requiring no additional software. This page describes how to configure and use it. For an overview of how it compares to the other supported tools, see xref:backup-restore/tools.adoc[Backup Tools]; for the terms used here, such as backup, snapshot, and the recovery objectives that guide scheduling, see xref:backup-restore/definitions.adoc[Backup Definitions].
 
 [#_vm_backup_restore]
 == Virtual machine backup and restore
@@ -342,7 +344,7 @@ image::vm/edit-quota-vm-read.png[]
 
 When a guest virtual machine is connected with the *QEMU Guest Agent*, the {harvester-product-name} controller performs filesystem freeze operations through Kubevirt's https://github.com/kubevirt/kubevirt/blob/main/docs/freeze.md#virt-freezer[virt-freezer] application to ensure filesystem consistency during virtual machine backups and snapshots.
 
-This feature is particularly valuable for virtual machines with high I/O activity or critical data that requires point-in-time consistency guarantees.
+This feature is particularly valuable for virtual machines with high I/O activity or critical data that requires point-in-time consistency guarantees. It provides the application-consistent backups discussed in xref:backup-restore/best-practices.adoc[Best Practices], and uses the same KubeVirt `virt-freezer` mechanism described for xref:backup-restore/integration-velero.adoc[Velero].
 
 === Prerequisites
 
@@ -440,7 +442,7 @@ virt-freezer --unfreeze --namespace <VM namespace> --name <VM name>
 [#_scheduled_vm_backups_snapshots]
 == Scheduled virtual machine backups and snapshots
 
-{harvester-product-name} supports the creation of virtual machine backups and snapshots on a scheduled basis, with the option to retain a specific number of backups and snapshots. You can suspend, resume, and update the schedule at runtime.
+{harvester-product-name} supports the creation of virtual machine backups and snapshots on a scheduled basis, with the option to retain a specific number of backups and snapshots. You can suspend, resume, and update the schedule at runtime. Set the schedule frequency to meet the xref:backup-restore/recommendations.adoc[Recovery Point Objective (RPO)] of the workload.
 
 === Create the Virtual Machine Schedule
 
