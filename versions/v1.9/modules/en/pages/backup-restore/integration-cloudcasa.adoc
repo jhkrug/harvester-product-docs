@@ -45,6 +45,22 @@ Because only a small amount of application state is restored while {longhorn-pro
 
 CloudCasa provides guided restore workflows with namespace-level and file-level options. For recovery testing, restore to a *new namespace* or to a test cluster so that production workloads are undisturbed. After the restore, start the restored virtual machine, confirm the guest boots, and verify the application and its data. For the storage-based DR solution, perform periodic full failover tests to the destination cluster and record the achieved RPO and RTO against the workload's xref:backup-restore/recommendations.adoc[objectives]. See xref:backup-restore/best-practices.adoc[Best Practices] for how often to test.
 
+== Limitations and considerations
+
+CloudCasa removes much of the operational burden of open-source tooling, but the following considerations apply.
+
+Commercial, third-party product::
+CloudCasa is developed and supported by Catalogic Software, not by SUSE. SUSE supports the {harvester-product-name} platform through your https://www.suse.com/support/[SUSE subscription], while licensing, support, and product issues for CloudCasa are handled by Catalogic.
+
+Subscription cost and node limits::
+CloudCasa is offered with a free tier (up to five nodes) and paid tiers (for example, a per-node monthly subscription for the Pro tier, and custom pricing for Enterprise). Protecting larger environments or using advanced features requires a paid subscription. Confirm current tiers and pricing with Catalogic.
+
+Managed SaaS versus self-hosted::
+The managed SaaS deployment sends Kubernetes resource and metadata to the CloudCasa service. Organizations with data residency or isolation requirements that cannot use the SaaS model should evaluate the self-hosted deployment, which they must operate themselves.
+
+Low-RTO DR depends on {longhorn-product-name}::
+The storage-based *DR for Storage* solution relies on {longhorn-product-name-tm} Disaster Recovery volumes for persistent volume replication. Both the source and destination clusters must therefore use {longhorn-product-name}. Workloads on external CSI storage can still be backed up, but they do not benefit from this low-RTO, storage-based failover mechanism.
+
 == Further reading
 
 * https://cloudcasa.io/partners/suse-rancher/[CloudCasa for {rancher-product-name}]

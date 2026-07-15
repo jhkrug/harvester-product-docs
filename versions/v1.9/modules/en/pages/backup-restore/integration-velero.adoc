@@ -151,6 +151,34 @@ velero restore get
 
 To complete a recovery test, start the restored virtual machine in the target namespace and verify that the guest boots and that data on both the root and data volumes is present and intact. Record the time taken and compare it against the workload's xref:backup-restore/recommendations.adoc[RTO].
 
+== Limitations and considerations
+
+Velero is a capable, community-supported tool, but it has limitations that you should weigh before adopting it for production data protection. Where these limitations are significant for your environment, consider one of the enterprise tools described in xref:backup-restore/tools.adoc[Backup Tools].
+
+No per-virtual-machine selection::
+Velero filters resources only by group version and label, so out of the box there is no way to back up or restore an individual virtual machine by name or identifier. The workaround is to apply custom labels to the virtual machine and _all_ of its dependency resources, or to explicitly list every dependency resource on the command line (as shown in <<Create a backup>>). As a best practice, back up an entire namespace and filter during restore.
+
+Consistency versus durability trade-off::
+Velero cannot provide both crash consistency and off-site durability at the same time. It can take storage snapshots that are crash-consistent but remain local to your infrastructure (and cannot be exported), or it can export backups to remote object storage that are not crash-consistent. Achieving application consistency requires the manually configured backup hooks and guest filesystem freeze described above.
+
+Serial per-node volume backups::
+The Velero node agent runs as a DaemonSet that backs up volumes on each node serially. When several volumes are attached to the same node, they are backed up one after another, so the volumes of a single application can be captured at different times (potentially with substantial lag between them). This can produce inconsistencies that only surface at restore time.
+
+No immutable backups::
+Velero does not support immutable backups. An administrator (or an attacker with equivalent access) can delete backups. This removes a key protection against ransomware and accidental or malicious deletion.
+
+Single, reused encryption key::
+Velero reuses a single encryption key across all backups. This is weaker than per-backup (envelope) encryption, and is a particular concern when you rely on third-party storage providers or need to move backup targets.
+
+No centralized multi-cluster management::
+Velero is a single-cluster, self-managed tool. Each cluster requires its own installation, configuration, credentials, schedules, and storage locations, with no central view across clusters. This friction grows as the number of clusters increases.
+
+Manual monitoring::
+There is no built-in dashboard or proactive alerting. You check backup status through `kubectl` or by parsing logs, so a failed backup may go unnoticed until you need to restore.
+
+CLI-driven restores and cross-cloud complexity::
+Restores are driven from the CLI and require solid knowledge of how Velero works internally. Cross-cluster restores work reasonably well within the same cloud, but moving workloads across cloud providers or accounts requires significant manual intervention, such as remapping storage classes and network configuration, or editing resource definitions.
+
 == Further reading
 
 * https://www.suse.com/c/using-velero-to-back-up-and-restore-suse-virtualization-vms-with-external-csi-storage/[Using Velero to Back Up and Restore {harvester-product-name} VMs with External CSI Storage]
