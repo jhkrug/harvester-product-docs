@@ -80,6 +80,19 @@ To restore, select a restore point for an application and choose the restore tar
 
 For recovery testing, restore to a *new namespace* so that the running workload is not disrupted. After the restore completes, start the restored virtual machine, confirm the guest boots, and verify the application and its data. Record the elapsed time and compare it against the workload's xref:backup-restore/recommendations.adoc[RTO]. Schedule these tests regularly, as described in xref:backup-restore/best-practices.adoc[Best Practices].
 
+== Limitations and considerations
+
+Veeam Kasten is an enterprise platform that addresses many of the operational gaps of open-source tooling, but the following considerations apply.
+
+Commercial, third-party product::
+Veeam Kasten is developed, licensed, and supported by Veeam, not by SUSE. SUSE supports the {harvester-product-name} platform through your https://www.suse.com/support/[SUSE subscription], while licensing, support, and product issues for Veeam Kasten are handled by Veeam. Full enterprise capabilities require a commercial license beyond any free edition.
+
+In-cluster deployment and operational footprint::
+Veeam Kasten runs inside the cluster it protects, using the underlying RKE2 control plane and an ingress controller for its interface. It is deployed and upgraded with Helm, so you are responsible for operating and maintaining the platform (or its self-hosted components) within your environment.
+
+Cluster preparation required::
+Protecting {longhorn-product-name-tm} workloads requires annotating the storage class and volume snapshot class so that Veeam Kasten can export block-mode disks and take storage snapshots, as described in <<Prepare the cluster>>. Application-consistent backups still depend on correct guest configuration (QEMU guest agent, and filesystem freeze support in the guest).
+
 == Further reading
 
 * https://documentation.suse.com/trd/veeam/html/gs_virtualization_veeam-kasten/index.html[Protect {harvester-product-name} Workloads with Veeam Kasten] (SUSE Technical Reference Documentation)
