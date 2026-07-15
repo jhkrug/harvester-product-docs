@@ -104,6 +104,11 @@
 *** xref:backup-restore/integration-cloudcasa.adoc[]
 ** xref:backup-restore/best-practices.adoc[]
 
+// Folder: vm-migration:
+
+* Virtual Machine Migration
+** xref:vm-migration/vendor-compatibility-comparison.adoc[]
+
 // Folder: networking:
 
 * Networking
