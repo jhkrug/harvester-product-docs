@@ -164,9 +164,9 @@ Hardware issues may force you to replace the management node. {harvester-product
 
 For more information about assigning roles to nodes, see xref:installation-setup/methods/iso-install.adoc[ISO Installation].
 
-== Multi-disk Management
+== Multi-disk management
 
-=== Add Additional Disks
+=== Add disks
 
 Users can view and add multiple disks as additional data volumes from the edit host page.
 
