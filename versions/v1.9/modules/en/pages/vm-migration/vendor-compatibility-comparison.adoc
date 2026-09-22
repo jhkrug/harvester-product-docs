@@ -2,7 +2,7 @@
 :revdate: 2026-07-15
 :page-revdate: {revdate}
 
-Migrating existing virtual machines onto {harvester-product-name-tm} is a common first step when moving away from a traditional hypervisor such as VMware vSphere. Several tools are available, ranging from built-in {harvester-product-name} add-ons to a SUSE partner platform. This guide compares them so that you can choose the right approach for your source environment, scale, and support requirements.
+Migrating existing virtual machines into {harvester-product-name-tm} is a common first step when moving away from a traditional hypervisor such as VMware vSphere. Several tools are available, ranging from built-in {harvester-product-name} add-ons to a SUSE partner platform. This guide compares them so that you can choose the right approach for your source environment, scale, and support requirements.
 
 [NOTE]
 ====
