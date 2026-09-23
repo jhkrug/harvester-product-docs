@@ -181,5 +181,7 @@ Restores are driven from the CLI and require solid knowledge of how Velero works
 
 == Further reading
 
+* https://harvesterhci.io/kb/2025/05/26/velero-backup-restore/[External CSI Storage Backup and Restore with Velero]
+* https://harvesterhci.io/kb/2025/10/07/velero-backup-filesystem-freeze/[Filesystem Freeze During Velero Backup]
 * https://www.suse.com/c/using-velero-to-back-up-and-restore-suse-virtualization-vms-with-external-csi-storage/[Using Velero to Back Up and Restore {harvester-product-name} VMs with External CSI Storage]
 * https://velero.io/docs/[Velero documentation]

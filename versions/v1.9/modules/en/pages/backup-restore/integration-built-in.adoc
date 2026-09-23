@@ -324,7 +324,7 @@ image::vm/edit-quota-vm-read.png[]
 
 == Filesystem freeze for virtual machine backups and snapshots
 
-When a guest virtual machine is connected with the *QEMU Guest Agent*, the {harvester-product-name} controller performs filesystem freeze operations through Kubevirt's https://github.com/kubevirt/kubevirt/blob/main/docs/freeze.md#virt-freezer[virt-freezer] application to ensure filesystem consistency during virtual machine backups and snapshots.
+When a guest virtual machine is connected with the *QEMU Guest Agent*, the {harvester-product-name} controller performs filesystem freeze operations through KubeVirt's https://github.com/kubevirt/kubevirt/blob/main/docs/freeze.md#virt-freezer[virt-freezer] application to ensure filesystem consistency during virtual machine backups and snapshots.
 
 This feature is particularly valuable for virtual machines with high I/O activity or critical data that requires point-in-time consistency guarantees. It provides the application-consistent backups discussed in xref:backup-restore/best-practices.adoc[Best Practices], and uses the same KubeVirt `virt-freezer` mechanism described for xref:backup-restore/integration-velero.adoc[Velero].
 
