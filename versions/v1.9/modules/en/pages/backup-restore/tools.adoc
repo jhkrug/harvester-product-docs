@@ -31,11 +31,6 @@ Backup tools differ in what they are designed to protect. The following table su
 | Yes
 | Yes
 | Yes (with {longhorn-product-name} DR volumes for storage-based DR)
-
-| Restic
-| No (data mover only)
-| Indirectly, as the Velero node agent
-| Yes (file-level volume data)
 |===
 
 == Built-in virtual machine backup, snapshot, and restore
@@ -71,14 +66,6 @@ CloudCasa also offers a disaster recovery solution that pairs application-level 
 
 *Area of application:* Multi-cluster environments that require centralized management and low-RTO disaster recovery. For configuration, automation, and recovery testing, see xref:backup-restore/integration-cloudcasa.adoc[Integrating CloudCasa].
 
-== Restic
-
-https://restic.net/[Restic] is an open-source, file-level backup program that encrypts and deduplicates data before sending it to a repository on object storage or an NFS share. Restic is not used directly against {harvester-product-name}; instead, it is embedded in other tools as a _data mover_.
-
-Velero uses Restic (or its successor, https://kopia.io/[Kopia]) in its *node agent* to copy the contents of persistent volumes at the file level. This is the mechanism Velero uses to protect volumes when a native CSI snapshot is unavailable or when file-level portability is preferred. When you enable the Velero node agent, you are using this file-level data mover.
-
-*Area of application:* File-level volume data movement, used through Velero rather than on its own. For how to enable it, see the node agent options in xref:backup-restore/integration-velero.adoc[Integrating Velero].
-
 == Comparison of backup tools
 
 The following table summarizes the available tools to help you choose an approach.
@@ -109,5 +96,5 @@ The following table summarizes the available tools to help you choose an approac
 
 [NOTE]
 ====
-Velero, Veeam Kasten, CloudCasa, and Restic are developed and supported by their respective vendors and communities. For installation, configuration, and support details, refer to each vendor's own documentation. SUSE supports the {harvester-product-name} platform through your https://www.suse.com/support/[SUSE subscription].
+Velero, Veeam Kasten, and CloudCasa are developed and supported by their respective vendors and communities. For installation, configuration, and support details, refer to each vendor's own documentation. SUSE supports the {harvester-product-name} platform through your https://www.suse.com/support/[SUSE subscription].
 ====

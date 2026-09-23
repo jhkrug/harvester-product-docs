@@ -26,7 +26,7 @@ xref:backup-restore/recommendations.adoc[RPO and RTO Recommendations]::
 Recommends recovery objectives for critical systems (such as enterprise databases), standard systems, and archive data, with the justification for each value.
 
 xref:backup-restore/tools.adoc[Backup Tools]::
-Gives an overview of the supported tools — the built-in capabilities, Velero, Veeam Kasten, CloudCasa, and Restic — and their areas of application.
+Gives an overview of the supported tools — the built-in capabilities, Velero, Veeam Kasten, and CloudCasa — and their areas of application.
 
 xref:backup-restore/integration-velero.adoc[Integrating Velero], xref:backup-restore/integration-veeam-kasten.adoc[Integrating Veeam Kasten], xref:backup-restore/integration-cloudcasa.adoc[Integrating CloudCasa]::
 Provide configuration, automation, and recovery testing guidance for each tool.
